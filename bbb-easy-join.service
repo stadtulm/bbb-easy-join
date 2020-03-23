@@ -1,0 +1,14 @@
+[Unit]
+Description=BigBlueButton Easy Join
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node app.js
+WorkingDirectory=/var/www/bbb-easy-join
+Restart=always
+RestartSec=60
+User=bigbluebutton
+
+[Install]
+WantedBy=multi-user.target
