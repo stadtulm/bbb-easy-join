@@ -12,6 +12,9 @@ const host = process.env.HOST || '0.0.0.0'
 const BBB_API_URL = process.env.BBB_API_URL
 const BBB_API_SECRET = process.env.BBB_API_SECRET
 
+// TODO: internationalize more
+slugify.extend({'ä': 'ae', 'ü': 'ue', 'ö': 'oe', 'ß': 'ss'})
+
 const sha1 = function (data) {
   return crypto.createHash("sha1").update(data, "binary").digest("hex")
 }
@@ -66,7 +69,7 @@ app.get('/b', function (req, res) {
 
 app.post('/b', async function (req, res) {
   var roomName = req.body.room
-  var room = slugify(roomName)
+  var room = slugify(roomName, { lower: true })
 
   var meet = await createMeeting(roomName, room)
   if (meet.returncode === 'FAILED' && meet.messageKey !== 'idNotUnique') {
