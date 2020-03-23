@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "fast-xml-parser": "^3.16.0",
+    "node-fetch": "^2.6.0",
+    "slugify": "^1.4.0"
+  },
+  "name": "bbb-easy-join",
+  "version": "1.0.0",
+  "description": "easy frontend for creating and joining new BigBlueButton conferences",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
