@@ -11,6 +11,7 @@ const host = process.env.HOST || '0.0.0.0'
 
 const BBB_API_URL = process.env.BBB_API_URL
 const BBB_API_SECRET = process.env.BBB_API_SECRET
+const WELCOME_MESSAGE = process.env.WELCOME_MESSAGE
 
 // TODO: internationalize more
 slugify.extend({'ä': 'ae', 'ü': 'ue', 'ö': 'oe', 'ß': 'ss'})
@@ -25,18 +26,18 @@ const checksum = function (method, query) {
 
 const buildApiUrl = function (method, params) {
   var url = BBB_API_URL + (BBB_API_URL.charAt(BBB_API_URL.length - 1) === '/' ? '' : '/') + 'api/' + method
-  var query = querystring.stringify(params)
+  var query = querystring.stringify(params).replace(/'/g, '%27')
   var cs = checksum(method, query)
   params['checksum'] = cs
-  return url + '?' + querystring.stringify(params)
+  return url + '?' + querystring.stringify(params).replace(/'/g, '%27')
 }
 
 const callApi = async function (method, params) {
   return fetch(buildApiUrl(method, params)).then(res => res.text()).then(data => xmlparser.parse(data).response)
 }
 
-const createMeeting = async function (name, id) {
-  var params = { meetingID: id, name: name }
+const createMeeting = async function (name, id, options) {
+  var params = { meetingID: id, name: name, ...options }
   return await callApi('create', params)
 }
 
@@ -57,6 +58,7 @@ const joinMeetingUrl = function (id, name, password) {
 
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
+app.set('trust proxy', 'loopback')
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
@@ -70,8 +72,15 @@ app.get('/b', function (req, res) {
 app.post('/b', async function (req, res) {
   var roomName = req.body.room
   var room = slugify(roomName, { lower: true })
+  var options = {}
 
-  var meet = await createMeeting(roomName, room)
+  if (typeof WELCOME_MESSAGE === 'string') {
+    var url = req.protocol + '://' + req.get('host') + '/b/' + room
+    var joinpattern = new RegExp('%%JOINURL%%', 'g')
+    options.welcome = WELCOME_MESSAGE.replace(joinpattern, url)
+  }
+
+  var meet = await createMeeting(roomName, room, options)
   if (meet.returncode === 'FAILED' && meet.messageKey !== 'idNotUnique') {
     res.redirect('/b')
     return
