@@ -240,5 +240,16 @@
 	      </div>
       </div>
     </footer>
+  <script>
+    var el = document.getElementById('name');
+    if (el.value === "" && !!window.localStorage && window.localStorage.getItem("username") !== null) {
+      el.value = window.localStorage.getItem("username");
+    }
+    el.form.addEventListener('submit', function() {
+      if (!!window.localStorage) {
+        window.localStorage.setItem("username", el.value);
+      }
+   });
+  </script>
   </body>
 </html>
