@@ -111,7 +111,7 @@ app.post('/b/:room', async function (req, res) {
   }
 
   var password = info.attendeePW
-  if (info.hasUserJoined !== "false" || info.participantCount == 0) {
+  if (info.hasUserJoined == false || info.participantCount == 0) {
     password = info.moderatorPW
   }
 
