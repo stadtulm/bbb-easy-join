@@ -27,6 +27,7 @@
     <div class='navbar'>
       <div class='container'>
         <div class="logo">
+          <img alt="ulm.dev" src="/images/logo.png" width="80">
           <img src="/images/bbb-logo.png" width="240" alt="BigBlueButton"/>
         </div>
       </div>
@@ -43,11 +44,11 @@
       <div class='row'>
         <div class='span six html5clientOnly input-center'>
           <div class='join-meeting '>
-            <h4>Joining <em><%= info.meetingName %></em></h4>
+            <h4>Trete dem Raum <em><%= info.meetingName %></em> bei</h4>
 
             <form method="POST" action="/b/<%= room %>">
-              <input type="text" id="name" required="" name="name" placeholder="Enter Your Name" size="29" class="field input-default" autofocus>
-              <input type="submit" value="Join" class="submit_btn button success large"><br>
+              <input type="text" id="name" required="" name="name" placeholder="Bitte Name eingeben" size="29" class="field input-default" autofocus>
+              <input type="submit" value="Teilnehmen" class="submit_btn button success large"><br>
             </form>
 
           </div>
@@ -55,132 +56,6 @@
       </div>
 
 
-      <hr class="featurette-divider">
-
-      <!-- BigBlueButton Features -->
-      <div class="bbb-features">
-	      <div class='row'>
-	        <div class='featurette-heading'>
-	          <h2>Features</h2>
-	        </div>
-
-	        <div class='span four first'>
-	          <i class="fa fa-play-circle-o"></i>
-
-	          <div class="bbb-features-content">
-	            <h3>Record and Playback</h3>
-	            <p>BigBlueButton can record your sessions for later playback by students.</p>
-	          </div>
-	        </div>
-
-	        <div class='span four'>
-	          <i class="fa fa-pencil-square-o"></i>
-
-	          <div class="bbb-features-content">
-	            <h3><a href="https://youtu.be/Q2tG2SS4gXA?t=190">Whiteboard</a></h3>
-	            <p>The whiteboard controls let you annotate key parts of your presentation.</p>
-	          </div>
-	        </div>
-
-	        <div class='span four last'>
-	          <i class="fa fa-desktop"></i>
-
-	          <div class="bbb-features-content">
-	            <h3><a href="https://youtu.be/Q2tG2SS4gXA?t=331">Screen Sharing</a></h3>
-	            <p>You can broadcast your desktop for all users to see.</p>
-	          </div>
-	        </div>
-	      </div>
-
-
-	      <div class='row'>
-	        <div class='span four first'>
-	          <i class="fa fa-microphone"></i>
-
-	          <div class="bbb-features-content">
-	            <h3><a href="https://youtu.be/uYYnryIM0Uw?t=4">Audio</a></h3>
-	            <p>Users of Chrome and FireFox browsers will benefit from high-quality, low-latency WebRTC audio.</p>
-	          </div>
-	        </div>
-
-	        <div class='span four'>
-	          <i class="fa fa-bar-chart-o"></i>
-
-	          <div class="bbb-features-content">
-	            <h3><a href="https://youtu.be/J9mbw00P9W0">Presentation</a></h3>
-	            <p>You can upload any PDF presentation or MS office document. BigBlueButton keeps everyone in sync with your current slide, zoom, pan, annotations, and mouse pointer.</p>
-	          </div>
-	        </div>
-
-	        <div class='span four last'>
-	          <i class="fa fa-video-camera"></i>
-
-	          <div class="bbb-features-content">
-	            <h3><a href="https://youtu.be/uYYnryIM0Uw?t=117">Webcam</a></h3>
-	            <p>Multiple users can share their webcam at the same time. There is no built-in limit on the number of simultaneously active webcams.</p>
-	          </div>
-	        </div>
-	      </div>
-
-              <div class='row'>
-                <div class='span four first'>
-                  <i class="fa fa-smile-o"></i>
-
-                  <div class="bbb-features-content">
-                    <h3><a href="https://youtu.be/uYYnryIM0Uw?t=107">Emoji</a></h3>
-                    <p>Students can raise hand and use emoji icons for feedback.</p>
-                  </div>
-                </div>
-
-                <div class='span four'>
-                  <i class="fa fa-check-square-o"></i>
-
-                  <div class="bbb-features-content">
-                    <h3><a href="https://youtu.be/Q2tG2SS4gXA">Polling</a></h3>
-                    <p>You can poll students anytime to increase engagement.</p>
-                  </div>
-                </div>
-
-                <div class='span four last'>
-                  <i class="fa fa-comments-o"></i>
-
-                  <div class="bbb-features-content">
-                    <h3><a href="https://youtu.be/uYYnryIM0Uw?t=50">Chat</a></h3>
-                    <p>You can interact with students through public and private chat.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class='row'>
-                <div class='span four first'>
-                  <i class="fa fa-cc"></i>
-
-                  <div class="bbb-features-content">
-                    <h3><a href="https://youtu.be/feC_zm1y3N4">Live Captioning</a></h3>
-                    <p>You can enter live captions for students.  These captions will later appear as subtitles in recordings.</p>
-                  </div>
-                </div>
-
-                <div class='span four'>
-                  <i class="fa fa-users"></i>
-
-                  <div class="bbb-features-content">
-                    <h3><a href="https://youtu.be/Q2tG2SS4gXA?t=126">Breakout Rooms</a></h3>
-                    <p>You can group and place students into breakout rooms (full BigBlueButton sessions) for give number of minutes for increased collaboration.</p>
-                  </div>
-                </div>
-
-                <div class='span four last'>
-                  <i class="fa fa-blind"></i>
-
-                  <div class="bbb-features-content">
-                    <h3>Screen Reader</h3>
-                    <p>Students with visual disabilities can use JAWS screen reader to interact with BigBlueButton.</p>
-                  </div>
-                </div>
-              </div>
-
-      </div>
       <hr class="featurette-divider">
 
       <!-- BigBlueButton Videos -->
@@ -228,6 +103,19 @@
 		        <p>BigBlueButton and the BigBlueButton logo are trademarks of <a href="http://bigbluebutton.org/">BigBlueButton Inc.</a></p>
           </div>
 	      	<div class="span six last">
+          <p>Impressum:</p> 
+					<p>Stadt Ulm<br>
+						Rathaus<br>
+						Marktplatz 1<br>
+            89073 Ulm</p>
+
+					<p>Zentrale Informationsstelle<br>
+						Telefon: +49 (0)731 161-0<br>
+						Fax: +49 (0)731 161-1613<br>
+  					E-Mail: info@ulm.de</p>
+
+					<p>Die Stadt Ulm ist eine Körperschaft des öffentlichen Rechts. Sie wird vertreten durch Oberbürgermeister Gunter Czisch.<br>
+					</p>
 	      	</div>
 	      </div> 
 
