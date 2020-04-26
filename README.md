@@ -43,6 +43,14 @@ sudo systemctl enable bbb-easy-join
 # start it immediately 
 sudo systemctl start bbb-easy-join
 ```
+### Change subdirectory
+```bash
+cd /var/www/bbb-easy-join/
+sed -i 's|/easy|/subdirname|g' app.js bbb-easy-join.nginx views/index.ejs views/join.ejs 
+systemctl reload nginx && systemctl restart bbb-easy-join.service
+```
+Now bbb-easy-join is served on /subdirname (change to your likeings)
+
 
 ### Note
 
