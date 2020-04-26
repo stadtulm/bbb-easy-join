@@ -40,20 +40,35 @@
 
 
       <!-- Welcome Message & Login Into Demo -->
-      <div class='row'>
-        <div class='span six html5clientOnly input-center'>
-          <div class='join-meeting '>
-            <h4>Create a Meeting</h4>
-            <p>(Think about a short and unique meeting room name)</p>
-            <form method="POST" action="/b">
-              <input type="text" id="room" required="" name="room" placeholder="Enter Meeting Room Name" size="29" class="field input-default" autofocus>
-              <input type="submit" value="Join" class="submit_btn button success large"><br>
-            </form>
-
+      <div class="row">
+	        <div class="span six html5clientOnly input-center">
+	          <div class="join-meeting ">
+			<% if (roomMissing) { %>
+				<div class="alert danger"><p>Room <em><%= roomName %></em> does not exist (yet).</p></div>
+				<br>
+				<h4>Do you want to create it?</h4>
+				<p>(or just create any room with a unique name)</p>
+			<% } else { %>
+				<% if (roomBlocked) { %>
+					<div class="alert danger"><p>Room <em><%= roomName %></em> already exists.
+					<br>
+					<a href="/b/<%= roomName %>">Click here to join <em><%= roomName %></em>.</a></p></div>
+					<h4>
+					Or choose another room name:
+					</h4>
+				<% } else { %>
+					<h4>Enter meeting room name</h4>
+					<p>(think of a unique name for your room)</p>
+				<% } %>
+			<% } %>
+			<form method="POST" action="/b">
+			<input type="text" id="room" required="" name="room" <% if (roomName && roomMissing) { %>value="<%= roomName %>"<% } %>placeholder="Roomname" size="29" class="field input-default" autofocus="">
+			<input type="password" id="room_password" name="room_password" placeholder="Password (optional)" size="29" class="field input-default">
+			<input type="submit" value="Create Room" class="submit_btn button success large"><br>
+		</form>
           </div>
         </div>
       </div>
-
       <hr class="featurette-divider">
       <!-- Welcome Message & Login Into Demo -->
       <div class='row'>
