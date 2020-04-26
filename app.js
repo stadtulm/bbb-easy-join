@@ -88,7 +88,8 @@ app.get('/easy', function (req, res) {
 // if password is set provide mod and user pw for welcome message
 app.post('/easy', async function (req, res) {
   var roomName = req.body.room
-  var room = slugify(roomName, { lower: true })
+  //easy-prefix is used to mark the room as created by this frontend
+  var room = "easy-" + slugify(roomName, { lower: true })
 
   // if user provides password within room creation, set prefix "user-"  otherwise set it to "auto-"
   var room_password;
@@ -141,12 +142,13 @@ app.post('/easy', async function (req, res) {
   }
 
   //slugify roomName because room contains prefix
-  res.redirect('/easy/' + room )
+  res.redirect('/easy/' + slugify(roomName, { lower: true }))
 })
 
 app.get('/easy/:room', async function (req, res){
   // added slugify lower to prevent error if accidental uppercase or special characters are in adress
-  var room = slugify(req.params.room, { lower: true })
+  //easy-prefix is used to only handle rooms created by this frontend
+  var room = "easy-" + slugify(req.params.room, { lower: true })
   var info = await getMeetingInfo(room)
 
   //check if meeting info was not succesfully grabbed and in case redirect with error message (room not created)
