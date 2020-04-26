@@ -142,7 +142,7 @@ app.post('/easy', async function (req, res) {
   }
 
   //slugify roomName because room contains prefix
-  res.redirect('/easy/' + room )
+  res.redirect('/easy/' + slugify(roomName, { lower: true }))
 })
 
 app.get('/easy/:room', async function (req, res){
