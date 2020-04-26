@@ -52,7 +52,7 @@
 				<% if (roomBlocked) { %>
 					<div class="alert danger"><p>Room <em><%= roomName %></em> already exists.
 					<br>
-					<a href="/b/<%= roomName %>">Click here to join <em><%= roomName %></em>.</a></p></div>
+					<a href="/easy/<%= roomName %>">Click here to join <em><%= roomName %></em>.</a></p></div>
 					<h4>
 					Or choose another room name:
 					</h4>
@@ -61,7 +61,7 @@
 					<p>(think of a unique name for your room)</p>
 				<% } %>
 			<% } %>
-			<form method="POST" action="/b">
+			<form method="POST" action="/easy">
 			<input type="text" id="room" required="" name="room" <% if (roomName && roomMissing) { %>value="<%= roomName %>"<% } %>placeholder="Roomname" size="29" class="field input-default" autofocus="">
 			<input type="password" id="room_password" name="room_password" placeholder="Password (optional)" size="29" class="field input-default">
 			<input type="submit" value="Create Room" class="submit_btn button success large"><br>

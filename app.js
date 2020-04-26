@@ -6,7 +6,7 @@ const querystring = require('querystring')
 const slugify = require('slugify')
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 const host = process.env.HOST || '0.0.0.0'
 
 const BBB_API_URL = process.env.BBB_API_URL
@@ -73,10 +73,10 @@ app.set('trust proxy', 'loopback')
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
-  res.redirect('/b');
+  res.redirect('/easy');
 })
 
-app.get('/b', function (req, res) {
+app.get('/easy', function (req, res) {
   res.render('index', {
     roomName: req.query.roomName,
     roomBlocked: req.query.roomBlocked,
@@ -86,7 +86,7 @@ app.get('/b', function (req, res) {
 
 // create a room (optionally with password)
 // if password is set provide mod and user pw for welcome message
-app.post('/b', async function (req, res) {
+app.post('/easy', async function (req, res) {
   var roomName = req.body.room
   var room = slugify(roomName, { lower: true })
 
@@ -108,7 +108,7 @@ app.post('/b', async function (req, res) {
 
   //set welcome message(s)
   if (typeof WELCOME_MESSAGE === 'string') {
-    var url = req.protocol + '://' + req.get('host') + '/b/' + roomName
+    var url = req.protocol + '://' + req.get('host') + '/easy/' + roomName
     var joinpattern = new RegExp('%%JOINURL%%', 'g')
     //if the room has a manual password set we will provide two welcome msgs and only inform moderators about joining options and passwords
     if (room_password.startsWith('user-')) {
@@ -131,20 +131,20 @@ app.post('/b', async function (req, res) {
     if (meet.messageKey === 'idNotUnique') {
       // timeout as a very basic bruteforce prevention to prevent room search
       setTimeout(function (){
-        res.redirect('/b' + `?roomName=${encodeURIComponent(roomName)}&roomBlocked=true`);
+        res.redirect('/easy' + `?roomName=${encodeURIComponent(roomName)}&roomBlocked=true`);
       }, 1000);
       return
     } else {
-      res.redirect('/b');
+      res.redirect('/easy');
       return
     }
   }
 
   //slugify roomName because room contains prefix
-  res.redirect('/b/' + room )
+  res.redirect('/easy/' + room )
 })
 
-app.get('/b/:room', async function (req, res){
+app.get('/easy/:room', async function (req, res){
   // added slugify lower to prevent error if accidental uppercase or special characters are in adress
   var room = slugify(req.params.room, { lower: true })
   var info = await getMeetingInfo(room)
@@ -153,7 +153,7 @@ app.get('/b/:room', async function (req, res){
   if (info.returncode === 'FAILED') {
       // timeout as a very basic bruteforce prevention to prevent room search
       setTimeout(function (){
-        res.redirect('/b' + `?roomName=${encodeURIComponent(req.params.room)}&roomMissing=true`)
+        res.redirect('/easy' + `?roomName=${encodeURIComponent(req.params.room)}&roomMissing=true`)
       }, 1000);
     return
   }
@@ -178,12 +178,12 @@ app.get('/b/:room', async function (req, res){
     wrongPw: req.query.wrongPw })
 })
 
-app.post('/b/:room', async function (req, res) {
+app.post('/easy/:room', async function (req, res) {
   var room = slugify(req.params.room)
   var name = req.body.name
   var info = await getMeetingInfo(room)
   if (info.returncode === 'FAILED') {
-    res.redirect('/b')
+    res.redirect('/easy')
     return
   }
 
@@ -201,7 +201,7 @@ app.post('/b/:room', async function (req, res) {
         if (password != req.body.room_password) {
           // timeout as a very basic bruteforce prevention - double time for password try (2 seconds)
           setTimeout(function (){
-            res.redirect('/b/' + info.meetingName + `?username=${encodeURIComponent(name)}&wrongPw=true`);
+            res.redirect('/easy/' + info.meetingName + `?username=${encodeURIComponent(name)}&wrongPw=true`);
           }, 2000);
           return;
         }

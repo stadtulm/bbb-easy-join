@@ -9,7 +9,7 @@ The first user gets moderator level access.
 
 ### Setup
 
-Tested with an BBB instance installed with [bbb-install.sh](https://github.com/bigbluebutton/bbb-install).
+Tested with an BBB instance installed with [bbb-install.sh](https://github.com/bigbluebutton/bbb-install). Can be run next to greenlight on the same machine by using different subdirectory and port.
 
 Installation requires git and bbb to be installed on the same machine
 
@@ -29,7 +29,8 @@ npm install
 
 Create an `.env` file (use `.env.sample` as a template) and enter your BBB API URL and Secret there. You can get these by running `sudo bbb-conf --secret`.
 
-For serving the pages, copy `bbb-easy-join.nginx` to `/etc/bigbluebutton/nginx/`. If there are already `greenlight-redirect.nginx` and/or `greenlight.nginx`, rename (remove the .nginx suffix) or delete them.
+For serving the pages, copy `bbb-easy-join.nginx` to `/etc/bigbluebutton/nginx/`. If there is already `greenlight-redirect.nginx` you have to decide which subdirectory gets served by nginx if calling $DOMAIN/.
+Either remove `greenlight-redirect.nginx` or remove redirect in `bbb-easy-join.nginx` beforce copying (remove last 3 lines).
 
 You can start the service by running `/usr/bin/node /var/www/bbb-easy-join/app.js`
 If you want to keep the service running in background and on startup:

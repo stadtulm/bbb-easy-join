@@ -42,7 +42,7 @@
 	       <% if (wrongPw) { %>
 	         <div class="alert danger"><p>Wrong password</p></div>
 	       <% } %>
-	         <form method="POST" action="/b/<%= room %>">
+	         <form method="POST" action="/easy/<%= room %>">
 		   <input type="text" id="name" required="" name="name" <% if (username) { %>value="<%= username %>"<% } %> placeholder="Choose a name" size="29" class="field input-default" autofocus>
 		   <% if (requiresPassword) { %>
 		     <input type="password" id="room_password" required="" name="room_password" placeholder="Password (required)" size="29" class="field input-default">
