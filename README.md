@@ -9,7 +9,7 @@ The first user gets moderator level access.
 
 ### Setup
 
-Tested with an BBB instance installed with [bbb-install.sh](https://github.com/bigbluebutton/bbb-install). Can be run next to greenlight on the same machine by using different subdirectory and port.
+Tested with an BBB instance installed with [bbb-install.sh](https://github.com/bigbluebutton/bbb-install). Can be run next to greenlight on the same machine by using different subdirectory and port. Can also be run on a different machine than BBB using below instructions.
 
 Installation requires git and bbb to be installed on the same machine
 
@@ -50,6 +50,26 @@ sed -i 's|/easy|/subdirname|g' app.js bbb-easy-join.nginx views/index.ejs views/
 systemctl reload nginx && systemctl restart bbb-easy-join.service
 ```
 Now bbb-easy-join is served on /subdirname (change to your likeings)
+
+### run on a different server than bbb
+The frontend van be run on a different server than the actual bbb. 
+
+Installation requires git and nodejs 12 to be installed on the same machine
+
+```bash
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt install git nodejs
+```
+
+Checkout this repository to /var/www/bbb-easy-join
+
+```
+git clone https://github.com/svoeth/bbb-easy-join.git /var/www/bbb-easy-join
+cd /var/www/bbb-easy-join
+npm install
+```
+
+Add the line `user
 
 
 ### Note
