@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 const xmlparser = require('fast-xml-parser')
 const querystring = require('querystring')
 const slugify = require('slugify')
+const urljoin = require('url-join')
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 5000
@@ -12,6 +13,8 @@ const host = process.env.HOST || '0.0.0.0'
 const BBB_API_URL = process.env.BBB_API_URL
 const BBB_API_SECRET = process.env.BBB_API_SECRET
 const WELCOME_MESSAGE = process.env.WELCOME_MESSAGE
+
+const ROOT_PATH = '/b/'
 
 // TODO: internationalize more
 slugify.extend({'ä': 'ae', 'ü': 'ue', 'ö': 'oe', 'ß': 'ss'})
@@ -56,57 +59,59 @@ const joinMeetingUrl = function (id, name, password) {
   return buildApiUrl('join', params);
 }
 
-app.use(express.static('public'))
+app.locals.ROOT_PATH = ROOT_PATH;
+
+app.use(ROOT_PATH, express.static(__dirname + '/public'))
 app.set('view engine', 'ejs')
 app.set('trust proxy', 'loopback')
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
-  res.redirect('/b');
+  res.redirect(ROOT_PATH);
 })
 
-app.get('/b', function (req, res) {
+app.get(ROOT_PATH, function (req, res) {
   res.render('index')
 })
 
-app.post('/b', async function (req, res) {
+app.post(ROOT_PATH, async function (req, res) {
   var roomName = req.body.room
   var room = slugify(roomName, { lower: true })
   var options = {}
 
   if (typeof WELCOME_MESSAGE === 'string') {
-    var url = req.protocol + '://' + req.get('host') + '/b/' + room
+    var url = urljoin(req.protocol + '://' + req.get('host'), ROOT_PATH, room)
     var joinpattern = new RegExp('%%JOINURL%%', 'g')
     options.welcome = WELCOME_MESSAGE.replace(joinpattern, url)
   }
 
   var meet = await createMeeting(roomName, room, options)
   if (meet.returncode === 'FAILED' && meet.messageKey !== 'idNotUnique') {
-    res.redirect('/b')
+    res.redirect(ROOT_PATH)
     return
   }
 
-  res.redirect('/b/' + room)
+  res.redirect(urljoin(ROOT_PATH, room))
 })
 
-app.get('/b/:room', async function (req, res){
+app.get(urljoin(ROOT_PATH, ':room'), async function (req, res){
   var room = slugify(req.params.room)
 
   var info = await getMeetingInfo(room)
   if (info.returncode === 'FAILED') {
-    res.redirect('/b')
+    res.redirect(ROOT_PATH)
     return
   }
 
   res.render('join', { room: room, info: info })
 })
 
-app.post('/b/:room', async function (req, res) {
+app.post(urljoin(ROOT_PATH, ':room'), async function (req, res) {
   var room = slugify(req.params.room)
   var name = req.body.name
   var info = await getMeetingInfo(room)
   if (info.returncode === 'FAILED') {
-    res.redirect('/b')
+    res.redirect(ROOT_PATH)
     return
   }
 
@@ -118,5 +123,5 @@ app.post('/b/:room', async function (req, res) {
   res.redirect(joinMeetingUrl(room, name, password))
 })
 
-app.listen(port, host, () => console.log(`Running on ${host}:${port}`))
+app.listen(port, host, () => console.log(`Running on ${host}:${port}. root path: ${ROOT_PATH}`))
 
