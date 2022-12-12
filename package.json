@@ -2,7 +2,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fast-xml-parser": "^3.16.0",
     "node-fetch": "^2.6.1",
     "slugify": "^1.4.0"
